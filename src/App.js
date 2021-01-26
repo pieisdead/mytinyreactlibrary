@@ -1,23 +1,48 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
 
-function App() {
+import { getBooks } from './api/get';
+import Book from './components/Book';
+
+const App = () => {
+    
+    const [books, setBooks] = React.useState([]);
+    
+    React.useEffect(() => {
+        setBooks([]);
+       getBooks().then((books) => {
+          setBooks(books);
+       })
+    }, []);
+    
+    const rows = books.map((book, i) => {
+        return <Book key={i] book={book} />;
+    })
+    
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="page">
+        <header>
+            <section>
+                <h1><img src="./logo.svg" width="80" alt="MyTinyReactLibrary" /> MyTiny<strong>REACT</strong>Library</h1>
+            </section>
+        </header>
+        <div className="search">
+            <h4>Find a book</h4>
+            <input type="text" placeholder="Search books" />
+            <p><a href="">Advanced search</a></p>
+        </div>
+        <div className="books">
+            <div className="book-nav">
+                <label>Sort by</label>
+                <select>
+                    <option value="date_added">Date added</option>
+                </select>
+            </div>
+            {rows}
+        </div>
+        <footer>
+            <p>A MultiSites Demo site</p>
+        </footer>
     </div>
   );
 }

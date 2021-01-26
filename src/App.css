@@ -1,38 +1,36 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap');
+
+body, html {
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    color: #222;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.page {
+    display: block;
+    
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+header {
+    display: block;
+    background: #FFF;
+    padding: 0 20px;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.search {
+    display: block;
+    background: #79BE00;
+    padding: 30px 0 50px 0;
+    text-align: center;
 }
-
-.App-link {
-  color: #61dafb;
+.books {
+    display: block;
+    background: #DBDDD7;
+    padding: 30px 20px;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.book {
+    width: 22%;
+    display: inline-block;
+    background: #FFF;
+    border-radius: 10px;
+    margin: 0 10px 10px 0;
+    vertical-align: top;
 }
