@@ -13,13 +13,36 @@ body, html {
 header {
     display: block;
     background: #FFF;
-    padding: 0 20px;
+    padding: 5px 20px;
+    position: relative;
+}
+header h1 strong {
+    font-weight: 900;
+    color: #222;
+}
+header section {
+    display: inline-block;
+}
+header section:nth-of-type(2) {
+    float: right;
 }
 .search {
     display: block;
     background: #79BE00;
     padding: 30px 0 50px 0;
     text-align: center;
+    position: relative;
+}
+.search section {
+    position: relative;
+    display: inline-block;
+}
+.search .search-button {
+    position: absolute;
+    top: 4px;
+    right: 10px;
+    padding: 6px 10px;
+    cursor: pointer;
 }
 .books {
     display: block;
@@ -27,10 +50,162 @@ header {
     padding: 30px 20px;
 }
 .book {
-    width: 22%;
+    width: 24.9%;
     display: inline-block;
+    vertical-align: top;
+}
+.book > div {
+    padding: 15px;
     background: #FFF;
     border-radius: 10px;
-    margin: 0 10px 10px 0;
-    vertical-align: top;
+    margin: 0 20px 20px 0;
+    text-align: center;
+    position: relative;
+    min-height: 380px;
+    overflow: hidden;
+}
+.books > .book:nth-child(4n) > div {
+    margin-right: 0px;
+}
+.book img {
+    max-height: 180px;
+}
+h1 {
+    font-size: 45px;
+    color: #79BE00;
+    margin: 0;
+    padding: 0;
+    font-weight: 800;
+    vertical-align: middle;
+}
+h1 img {
+    vertical-align: middle;
+}
+h2 {
+    font-size: 22px;
+    color: #222;
+    margin: 0;
+    line-height: 1.1em;
+}
+h3 {
+    font-size: 16px;
+    color: #222;
+    margin: 0;
+    line-height: 1.2em;
+}
+h4 {
+    font-size: 49px;
+    color: #FFF;
+    margin: 0;
+    padding: 0;
+    line-height: 1.2em;
+}
+p {
+    font-size: 15px;
+    color: #222;
+}
+button {
+    padding: 10px 30px;
+    background: #79BE00;
+    color: #FFF;
+    border-radius: 14px;
+    display: inline-block;
+    border: none;
+}
+.search input {
+    width: 514px;
+    padding: 15px;
+    background: #FFF;
+    color: #222;
+    border-radius: 20px;
+    border: none;
+}
+.search a {
+    color: #FFF;
+    text-decoration: none;
+}
+.book-nav {
+    padding: 20px 20px 10px 20px;
+    display: block;
+    background: #DBDDD7;
+}
+.book-nav label {
+    margin-right: 10px;
+}
+.book-nav select {
+    padding: 5px 20px;
+    background: #FFF;
+    border: none;
+    border-radius: 10px;
+    display: inline-block;
+    margin: 0 10px 0 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+select::-ms-expand {
+    display: none;
+}
+footer {
+    padding: 10px 20px;
+    background: #222;
+    display: block;
+    color: #FFF;
+}
+footer p {
+    color: #FFF;
+}
+.book > div .star {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+}
+.wish-button {
+    vertical-align: middle;
+    padding: 10px;
+    background: #FFF;
+    border: solid #FFF thin;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.wish-button span {
+    vertical-align: middle;
+}
+.wish-button:hover {
+    background: #EDE8E8;
+    border: solid 1px #FFF;
+}
+.wish-button.active {
+    background: #EDE8E8;
+    border: solid 1px #CCC;
+}
+.wish-button img {
+    vertical-align: middle;
+}
+.wishlist {
+    position: absolute;
+    right: 0px;
+    top: 74px;
+    background: #EDE8E8;
+    padding: 0;
+    border: solid #CCCCCC 1px;
+    min-width: 300px;
+    z-index: 2;
+}
+.wishlist > section {
+    padding: 10px 15px;
+    border-bottom: solid #CCC 1px;
+    position: relative;
+    display: block;
+}
+.wishlist p {
+    font-size: 15px;
+    color: #000;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.2em;
+}
+.wishlist .delete {
+    position: absolute;
+    top: 10px;
+    right: 14px;
 }

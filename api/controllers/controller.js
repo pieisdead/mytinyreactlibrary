@@ -3,7 +3,7 @@
 var Book = require('../models/model');
 
 exports.list_all_books = function(req, res) {
-    Book.getAllBooks(function(err, books) {
+    Book.getAllBooks(req.params.sort, req.params.order, function(err, books) {
         if (err) {
             res.send(err);
         } else {

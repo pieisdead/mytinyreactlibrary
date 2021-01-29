@@ -8,8 +8,8 @@ var Book = function(book) {
     this.created_at = new Date();
 };
 
-Book.getAllBooks = function(result) {
-    sql.query("SELECT * FROM books", function(err, res) {
+Book.getAllBooks = function(sort, order, result) {
+    sql.query("SELECT * FROM books ORDER BY " + sort + " " + order, function(err, res) {
         if (err) {
             console.log('Error: ' + err);
             result(null, err);
