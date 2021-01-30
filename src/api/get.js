@@ -1,8 +1,13 @@
 import $ from 'jquery';
 
-export function getBooks(sort, order) {
+export function getBooks(sort, order, term) {
     return new Promise((resolve, reject) => {
-        const apiString = 'http://localhost:9000/books/' + sort + '/' + order;
+        var apiString = '';
+        if (term === '') {
+            apiString = 'http://localhost:9000/books/' + sort + '/' + order;
+        } else {
+            apiString = 'http://localhost:9000/search/' + term;
+        }
         $.ajax({
             url: apiString,
             success: (latestResults) => {
@@ -23,10 +28,26 @@ export function getBookById(bookId) {
             url: apiString,
             success: (latestResult) => {
                 const result = JSON.parse(latestResult);
-                resolve(results);
+                resolve(result);
             },
             error: (xhr, status, err) => {
                 console.log('Falied to fetch book');
+            }
+        });
+    });
+}
+
+export function searchBooks(term) {
+    return new Promise((resolve, reject) => {
+        const apiString = 'http://localhost:9000/search/' + term;
+        $.ajax({
+            url: apiString,
+            success: (latestResults) => {
+                const results = JSON.parse(latestResults);
+                resolve(results);
+            },
+            error: (xhr, status, err) => {
+                console.log('Search failed');
             }
         });
     });

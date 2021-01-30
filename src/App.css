@@ -132,7 +132,7 @@ button {
 .book-nav label {
     margin-right: 10px;
 }
-.book-nav select {
+.book-nav select, select {
     padding: 5px 20px;
     background: #FFF;
     border: none;
@@ -208,4 +208,9 @@ footer p {
     position: absolute;
     top: 10px;
     right: 14px;
+}
+.advanced {
+    overflow: hidden;
+    height: 0px;
+    transition: height 0.4s ease-out;
 }

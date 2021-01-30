@@ -21,3 +21,13 @@ exports.read_book = function(req, res) {
         }
     });
 }
+
+exports.search_books = function(req, res) {
+    Book.searchBooks(req.params.term, function(err, books) {
+        if (err) {
+            res.send(err);
+        } else {
+            res.json(JSON.stringify(books));
+        }
+    });
+}

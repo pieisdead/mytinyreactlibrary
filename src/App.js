@@ -1,24 +1,35 @@
 import React from 'react';
 import './App.css';
+import { useCookies } from 'react-cookie';
 
-import { getBooks } from './api/get';
+import { getBooks, searchBooks } from './api/get';
 import Book from './components/Book';
 import Wishlist from './components/Wishlist';
+import AdvancedSearch from './components/AdvancedSearch';
 
 const App = () => {
     
+    const [cookie, setCookie] = useCookies(['ids']);
     const [books, setBooks] = React.useState([]);
     const [loadLimit, setLoadLimit] = React.useState(20);
     const [sort, setSort] = React.useState('date_added');
     const [order, setOrder] = React.useState('ASC');
-    const [wishlist, setWishList] = React.useState([]);
+    const [wishlist, setWishList] = React.useState([cookie]);
     const [showWishlist, setShowWishlist] = React.useState(false);
+    const [searchTerm, setSearchTerm] = React.useState('');
+    const [term, setTerm] = React.useState('');
+    const [showAdvancedSearch, setShowAdvancedSearch] = React.useState(false);
+    
+    
     
     React.useEffect(() => {
-       getBooks(sort, order).then((books) => {
-          setBooks(books);
-       })
-    }, [sort, order]);
+       setCookie('ids', '', {path: '/'});
+        getBooks(sort, order, searchTerm).then((books) => {
+            setBooks(books);
+        });
+       
+    }, [sort, order, searchTerm]);
+
     
     React.useEffect(() => {
         const handleScroll = () => {
@@ -49,6 +60,20 @@ const App = () => {
         document.getElementById('wishBtn').classList.toggle('active');
     }
     
+    function changeSearchTerm(e) {
+       setTerm(e.target.value);
+        
+    }
+    
+    function handleSearch() {
+        setSearchTerm(term);
+    }
+    
+    function handleAdvancedClick(e) {
+        setShowAdvancedSearch(showAdvancedSearch => !showAdvancedSearch);
+        e.preventDefault();
+    }
+    
   return (
     <div className="page">
         <header>
@@ -57,7 +82,7 @@ const App = () => {
             </section>
             <section>
                 <div className="wish-button" id="wishBtn" onClick={showHideWishlist}>
-                    <span>Your wishlist</span> <img src="./images/star-on.svg" width="30" />
+                    <span>Your wishlist</span> <img src="./images/star-on.svg" width="30" alt="Wish" />
                 </div>
                 <Wishlist list={wishlist} show={showWishlist} />
             </section>
@@ -65,10 +90,11 @@ const App = () => {
         <div className="search">
             <h4>Find a book</h4>
             <section>
-                <input type="text" placeholder="Search books" />
-                <button className="search-button"><img src="./images/search.svg" width="22" /></button>
+                <input type="text" placeholder="Search books" onChange={changeSearchTerm} />
+                <button className="search-button" onClick={handleSearch}><img src="./images/search.svg" width="22" alt="Search" /></button>
             </section>
-            <p><a href="">Advanced search</a></p>
+            <p><a href="" onClick={handleAdvancedClick}>Advanced search</a></p>
+            <AdvancedSearch show={showAdvancedSearch} />
         </div>
         <section className="book-nav">
             <label>Sort by</label>
@@ -87,7 +113,7 @@ const App = () => {
             {rows}
         </div>
         <footer>
-            <p>A MultiSites Demo site</p>
+            <p>A MultiSites Demo site. <a href="">About</a> this project.</p>
         </footer>
     </div>
   );

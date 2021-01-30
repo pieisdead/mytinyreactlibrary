@@ -1,20 +1,37 @@
 import React from 'react';
-
+import { getBookById } from '../api/get';
 
 
 const Wishlist = (props) => {
     
-    const list = props.list.map((item, i) => {
-        return (
-            <section>
-                <p>Anna Kerinina</p>
-                <p>Leo Tolstoy</p>
-                <span className="delete"><img src="./images/delete.svg" width="20" /></span>
-            </section>
-        )
-    });
+    const [books, setBooks] = React.useState([]);
     
-    if (list.length > 0) {
+    React.useEffect(() => {
+        if (props.list.length > 0) {
+            props.list.map((b, i) => {
+                getBookById(b).then((book) => {
+                     setBooks((prevState) => ({
+                       ...prevState,
+                       [i]: book
+                    }));
+                });
+            }) 
+        }
+    }, [props.list]);
+    console.log(books)
+    var list = props.list;
+    if (books.length > 0) {
+        list = books.map((book, i) => {
+            return (
+                <section key={i}>
+                    <p>{book.title}</p>
+                    <p>{book.author_firstname} {book.author_surname}</p>
+                    <span className="delete"><img src="./images/delete.svg" width="20" /></span>
+                </section>
+            )
+        });
+    }
+    if (books.length > 0) {
         if (props.show) {
             return (
                 <div className="wishlist">
