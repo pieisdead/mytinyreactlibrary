@@ -6,6 +6,7 @@ import { getBooks, searchBooks } from './api/get';
 import Book from './components/Book';
 import Wishlist from './components/Wishlist';
 import AdvancedSearch from './components/AdvancedSearch';
+import Modal from './components/Modal';
 
 const App = () => {
     
@@ -14,16 +15,18 @@ const App = () => {
     const [loadLimit, setLoadLimit] = React.useState(20);
     const [sort, setSort] = React.useState('date_added');
     const [order, setOrder] = React.useState('ASC');
-    const [wishlist, setWishList] = React.useState([cookie]);
+    const [wishlist, setWishList] = React.useState([cookie.ids]);
     const [showWishlist, setShowWishlist] = React.useState(false);
     const [searchTerm, setSearchTerm] = React.useState('');
     const [term, setTerm] = React.useState('');
     const [showAdvancedSearch, setShowAdvancedSearch] = React.useState(false);
-    
-    
+    const [activeBook, setActiveBook] = React.useState('');
+    const [showModal, setShowModal] = React.useState(false);
     
     React.useEffect(() => {
-       setCookie('ids', '', {path: '/'});
+       if (cookie.length === 0) {
+            setCookie('ids', '', {path: '/'});
+       }
         getBooks(sort, order, searchTerm).then((books) => {
             setBooks(books);
         });
@@ -39,11 +42,11 @@ const App = () => {
             }
         }
         window.addEventListener('scroll', handleScroll);
-    }, [loadLimit])
+    }, [loadLimit]);
     
     const rows = books.map((book, i) => {
         if (i < loadLimit) {
-            return <Book key={i} book={book} />;
+            return <Book key={i} book={book} openHandler={() => {bookClick(book.uid)}} />;
         }
     });
     
@@ -74,8 +77,18 @@ const App = () => {
         e.preventDefault();
     }
     
+    function bookClick(bid) {
+        setActiveBook(bid);
+        setShowModal(true);
+    }
+    
+    function closeModal() {
+        setShowModal(false);
+    }
+    
   return (
     <div className="page">
+        <Modal bookId={activeBook} show={showModal} closeHandler={closeModal} />
         <header>
             <section>
                 <h1><img src="./logo.svg" width="80" alt="MyTinyReactLibrary" /> MyTiny<strong>REACT</strong>Library</h1>

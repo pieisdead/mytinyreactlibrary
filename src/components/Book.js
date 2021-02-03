@@ -30,7 +30,7 @@ const Book = (props) => {
                 <h2>{props.book.title}</h2>
                 <h3>{props.book.author_firstname} {props.book.author_surname}</h3>
                 <p>{truncatedDescription}</p>
-                <button>View book</button>
+                <button onClick={props.openHandler}>View book</button>
             </animated.div>
         </div>
     )

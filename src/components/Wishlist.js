@@ -5,23 +5,18 @@ import { getBookById } from '../api/get';
 const Wishlist = (props) => {
     
     const [books, setBooks] = React.useState([]);
-    
     React.useEffect(() => {
         if (props.list.length > 0) {
             props.list.map((b, i) => {
                 getBookById(b).then((book) => {
-                     setBooks((prevState) => ({
-                       ...prevState,
-                       [i]: book
-                    }));
+                     setBooks(prevState => [...prevState, book]);
                 });
             }) 
         }
     }, [props.list]);
-    console.log(books)
-    var list = props.list;
+    var list = [];
     if (books.length > 0) {
-        list = books.map((book, i) => {
+        list = books[0].map((book, i) => {
             return (
                 <section key={i}>
                     <p>{book.title}</p>
