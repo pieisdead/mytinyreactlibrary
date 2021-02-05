@@ -61,7 +61,7 @@ header section:nth-of-type(2) {
     margin: 0 20px 20px 0;
     text-align: center;
     position: relative;
-    min-height: 380px;
+    min-height: 400px;
     overflow: hidden;
 }
 .books > .book:nth-child(4n) > div {
@@ -111,6 +111,10 @@ button {
     border-radius: 14px;
     display: inline-block;
     border: none;
+    cursor: pointer;
+}
+button:hover {
+    background: linear-gradient(to bottom, #79BE00, #798E00);
 }
 .search input {
     width: 514px;
@@ -276,4 +280,37 @@ footer p {
 .modal h5 {
     font-size: 18px;
     margin: 0;
+}
+.spinner {
+    position: relative;
+    margin: 50px auto;
+    text-align: center;
+    display: block;
+}
+.spinner span {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin: 0 10px 0 0;
+    background: #79BE00;
+    border-radius: 50%;
+    transition: transform 0.3s ease-out;
+}
+.empty {
+    padding: 20px 20px;
+    background: #DBDDD7;
+    min-height: 80vh;
+}
+.hidden, .modal > article > section p span.hidden {
+    display: none;
+}
+.modal > article > section p span {
+    display: block;
+}
+a {
+    color: #79BE00;
+    text-decoration: none;
+}
+p.pull {
+    margin: 0px;
 }

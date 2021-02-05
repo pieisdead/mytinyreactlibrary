@@ -1,34 +1,32 @@
 import React from 'react';
 import './App.css';
-import { useCookies } from 'react-cookie';
+
 
 import { getBooks, searchBooks } from './api/get';
 import Book from './components/Book';
-import Wishlist from './components/Wishlist';
+
 import AdvancedSearch from './components/AdvancedSearch';
 import Modal from './components/Modal';
 
 const App = () => {
     
-    const [cookie, setCookie] = useCookies(['ids']);
     const [books, setBooks] = React.useState([]);
     const [loadLimit, setLoadLimit] = React.useState(20);
     const [sort, setSort] = React.useState('date_added');
     const [order, setOrder] = React.useState('ASC');
-    const [wishlist, setWishList] = React.useState([cookie.ids]);
     const [showWishlist, setShowWishlist] = React.useState(false);
     const [searchTerm, setSearchTerm] = React.useState('');
     const [term, setTerm] = React.useState('');
     const [showAdvancedSearch, setShowAdvancedSearch] = React.useState(false);
     const [activeBook, setActiveBook] = React.useState('');
     const [showModal, setShowModal] = React.useState(false);
+    const [listLength, setListLength] = React.useState(0);
     
     React.useEffect(() => {
-       if (cookie.length === 0) {
-            setCookie('ids', '', {path: '/'});
-       }
+       
         getBooks(sort, order, searchTerm).then((books) => {
             setBooks(books);
+            setListLength(books.length);
         });
        
     }, [sort, order, searchTerm]);
@@ -37,12 +35,15 @@ const App = () => {
     React.useEffect(() => {
         const handleScroll = () => {
             const currentScroll = window.scrollY;
-            if (currentScroll >= document.body.offsetHeight - 1000) {
-                setLoadLimit(loadLimit + 20);
+                if (currentScroll >= document.body.offsetHeight - 1000) {
+                    if (listLength > loadLimit) {
+                        setLoadLimit(loadLimit + 20);
+                    }
+                }
             }
-        }
+        
         window.addEventListener('scroll', handleScroll);
-    }, [loadLimit]);
+    }, [loadLimit, listLength]);
     
     const rows = books.map((book, i) => {
         if (i < loadLimit) {
@@ -70,6 +71,7 @@ const App = () => {
     
     function handleSearch() {
         setSearchTerm(term);
+        setLoadLimit(20);
     }
     
     function handleAdvancedClick(e) {
@@ -86,6 +88,12 @@ const App = () => {
         setShowModal(false);
     }
     
+    function showAll(e) {
+        setSearchTerm('');
+        e.preventDefault();
+        setLoadLimit(20);
+    }
+    
   return (
     <div className="page">
         <Modal bookId={activeBook} show={showModal} closeHandler={closeModal} />
@@ -93,12 +101,7 @@ const App = () => {
             <section>
                 <h1><img src="./logo.svg" width="80" alt="MyTinyReactLibrary" /> MyTiny<strong>REACT</strong>Library</h1>
             </section>
-            <section>
-                <div className="wish-button" id="wishBtn" onClick={showHideWishlist}>
-                    <span>Your wishlist</span> <img src="./images/star-on.svg" width="30" alt="Wish" />
-                </div>
-                <Wishlist list={wishlist} show={showWishlist} />
-            </section>
+            
         </header>
         <div className="search">
             <h4>Find a book</h4>
@@ -106,7 +109,6 @@ const App = () => {
                 <input type="text" placeholder="Search books" onChange={changeSearchTerm} />
                 <button className="search-button" onClick={handleSearch}><img src="./images/search.svg" width="22" alt="Search" /></button>
             </section>
-            <p><a href="" onClick={handleAdvancedClick}>Advanced search</a></p>
             <AdvancedSearch show={showAdvancedSearch} />
         </div>
         <section className="book-nav">
@@ -121,9 +123,13 @@ const App = () => {
                 <option value="ASC">Ascending</option>
                 <option value="DESC">Descending</option>
             </select>
+            <p>Showing <strong>{listLength}</strong> books. <a href="#" onClick={showAll}>Show all</a>.</p>
         </section>
         <div className="books">
             {rows}
+        </div>
+        <div className="empty" style={listLength === 0 ? {display: 'block'} : {display: 'none'}}>
+            <h2>No books found</h2>
         </div>
         <footer>
             <p>A MultiSites Demo site. <a href="">About</a> this project.</p>

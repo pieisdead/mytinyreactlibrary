@@ -2,7 +2,7 @@ import React from 'react';
 import { useSpring, animated } from 'react-spring';
 import { useCookies } from 'react-cookie';
 
-import Star from './Star';
+
 
 const Book = (props) => {
     
@@ -25,11 +25,12 @@ const Book = (props) => {
     return (
         <div className="book">
             <animated.div style={spring}>
-                <Star on={added} clickHandler={() => { handleClick(props.book.uid)}} />
+                
                 <img src={props.book.cover_art !== '' ? './images/covers/' + props.book.cover_art : './images/book.svg'} alt={props.book.title + ' by ' + props.book.author_firstname + ' ' + props.book.author_surname} />
                 <h2>{props.book.title}</h2>
                 <h3>{props.book.author_firstname} {props.book.author_surname}</h3>
-                <p>{truncatedDescription}</p>
+                <p className="pull">{props.book.category}</p>
+                <p>{truncatedDescription}...</p>
                 <button onClick={props.openHandler}>View book</button>
             </animated.div>
         </div>

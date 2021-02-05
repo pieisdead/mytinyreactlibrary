@@ -1,5 +1,6 @@
 import React from 'react';
 import { getBookById } from '../api/get';
+import Spinner from './Spinner';
 
 const Modal = (props) => {
 
@@ -32,11 +33,13 @@ const Modal = (props) => {
                                 <h2>{book.title}</h2>
                                 <h3>{book.subtitle}</h3>
                                 <h5>{book.author_firstname} {book.author_middlename} {book.author_surname}</h5>
-                                <p>Editor: {book.editor}<br />
-                                    Translator: {book.translator}<br />
+                                <p><span className={book.editor !== '' ? '' : 'hidden'}>Editor: {book.editor}</span>
+                                    <span className={book.translator !== '' ? '' : 'hidden'}>Translator: {book.translator}</span>
+                                    Category: {book.category}<br />
                                     Publisher: {book.publisher}<br />
                                     Published: {book.publish_date}, {book.book_type}<br />
-                                    Pages: {book.pages}
+                                    Pages: {book.pages}<br />
+                                    ISBN: {book.isbn}
                                 </p>
                                 <p className="description">{book.description}</p>
                                 <p className="tags">{book.tags}</p>
@@ -47,9 +50,9 @@ const Modal = (props) => {
             )
         } else {
             return (
-                <div className="overlay">
-                    <div className="modal">
-                        <p>Loading</p>
+                <div className="overlay" style={{height: wh + 'px'}}>
+                    <div className="modal" style={{top: cScroll + 'px'}}>
+                        <Spinner />
                     </div>
                 </div>
             )
