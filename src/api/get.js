@@ -52,3 +52,19 @@ export function searchBooks(term) {
         });
     });
 }
+
+export function advancedSearch(term, title, author, genre) {
+    return new Promise((resolve, reject) => {
+        const apiString = 'http://localhost:9000/advanced/' + term + '/' + title + '/' + author + '/' + genre;
+        $.ajax({
+            url: apiString,
+            success: (latestResults) => {
+                const results = JSON.parse(latestResults);
+                resolve(results);
+            },
+            error: (xhr, status, err) => {
+                console.log('Advanced search failed');
+            }
+        });
+    });
+}

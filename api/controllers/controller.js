@@ -31,3 +31,13 @@ exports.search_books = function(req, res) {
         }
     });
 }
+
+exports.advanced_search = function(req, res) {
+    Book.advancedSearch(req.params.term, req.params.title, req.params.author, req.params.genre, function(err, books) {
+        if (err) {
+            res.send(err);
+        } else {
+            res.json(JSON.stringify(books));
+        }
+    });
+}

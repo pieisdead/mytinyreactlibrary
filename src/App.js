@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 
 
-import { getBooks, searchBooks } from './api/get';
+import { getBooks, searchBooks, advancedSearch } from './api/get';
 import Book from './components/Book';
 
 import AdvancedSearch from './components/AdvancedSearch';
@@ -21,15 +21,26 @@ const App = () => {
     const [activeBook, setActiveBook] = React.useState('');
     const [showModal, setShowModal] = React.useState(false);
     const [listLength, setListLength] = React.useState(0);
+    const [title, setTitle] = React.useState(false);
+    const [author, setAuthor] = React.useState(false);
+    const [genre, setGenre] = React.useState(false);
     
     React.useEffect(() => {
+       if (!title && !author && !genre) {
+            getBooks(sort, order, searchTerm).then((books) => {
+                setBooks(books);
+                setListLength(books.length);
+            });
+       } else {
+           if (searchTerm !== '') {
+               advancedSearch(searchTerm, title, author, genre).then((books) => {
+                   setBooks(books);
+                   setListLength(books.length);
+               });
+           }
+       }
        
-        getBooks(sort, order, searchTerm).then((books) => {
-            setBooks(books);
-            setListLength(books.length);
-        });
-       
-    }, [sort, order, searchTerm]);
+    }, [sort, order, searchTerm, title, author, genre]);
 
     
     React.useEffect(() => {
@@ -92,6 +103,23 @@ const App = () => {
         setSearchTerm('');
         e.preventDefault();
         setLoadLimit(20);
+        setTitle(false);
+        setAuthor(false);
+        setGenre(false);
+    }
+    
+    function changeAdvanced(e) {
+        switch (e.target.name) {
+            case 'Title':
+                setTitle(e.target.value);
+                break;
+            case 'Author':
+                setAuthor(e.target.value);
+                break;
+            case 'Genre':
+                setGenre(e.target.value);
+                break;
+        }
     }
     
   return (
@@ -109,7 +137,8 @@ const App = () => {
                 <input type="text" placeholder="Search books" onChange={changeSearchTerm} />
                 <button className="search-button" onClick={handleSearch}><img src="./images/search.svg" width="22" alt="Search" /></button>
             </section>
-            <AdvancedSearch show={showAdvancedSearch} />
+            <p><a href="#" onClick={handleAdvancedClick}>Advanced search</a></p>
+            <AdvancedSearch show={showAdvancedSearch} changeHandler={changeAdvanced} />
         </div>
         <section className="book-nav">
             <label>Sort by</label>
