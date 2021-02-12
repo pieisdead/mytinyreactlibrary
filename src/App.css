@@ -8,7 +8,7 @@ body, html {
 
 .page {
     display: block;
-    
+    position: relative;
 }
 header {
     display: block;
@@ -48,6 +48,7 @@ header section:nth-of-type(2) {
     display: block;
     background: #DBDDD7;
     padding: 30px 20px;
+    position: relative;
 }
 .book {
     width: 24.9%;
@@ -283,7 +284,7 @@ footer p {
 }
 .spinner {
     position: relative;
-    margin: 50px auto;
+    margin: 0px auto;
     text-align: center;
     display: block;
 }
@@ -313,4 +314,16 @@ a {
 }
 p.pull {
     margin: 0px;
+}
+.loading {
+    position: absolute;
+    top: 350px;
+    width: auto;
+    display: block;
+    background: rgba(250, 250, 250, 0.8);
+    border-radius: 20px;
+    padding: 10px;
+    z-index: 2;
+    margin: auto;
+    left: 45%;
 }

@@ -9,8 +9,15 @@ var connection = mysql.createConnection({
 
 connection.connect(function(err) {
     if (err) {
-        throw err;
+        if (!err.fatal) {
+            return;
+        }
+        if (err.code !== 'PROTOCOL_CONNECTION_LOST') {
+            throw err;
+        }
+        
     }
+    
 });
 
 module.exports = connection;

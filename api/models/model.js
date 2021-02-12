@@ -60,6 +60,8 @@ Book.advancedSearch = function(term, title, author, genre, result) {
         sqlString = "select * from books WHERE (`category` like '%" + term + "%')";
     } else if (!t && a && !g) {
         sqlString = "select * from books WHERE (`author_surname` like '%" + term + "%')";
+    } else if (t && !a && g) {
+        sqlString = "select * from books WHERE (`title` like '%" + term + "%' OR `category` like '%" + term + "%')";
     } else {
         sqlString = "select * from books WHERE (`title` like '%" + term + "%' OR `subtitle` like '%" + term + "%' OR `author_surname` like '%" + term + "%' OR `description` like '%" + term + "%' OR `category` like '%" + term + "%' OR `tags` like '%" + term + "%')";
     }

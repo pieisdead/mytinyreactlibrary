@@ -4,6 +4,7 @@ import './App.css';
 
 import { getBooks, searchBooks, advancedSearch } from './api/get';
 import Book from './components/Book';
+import Spinner from './components/Spinner';
 
 import AdvancedSearch from './components/AdvancedSearch';
 import Modal from './components/Modal';
@@ -24,18 +25,22 @@ const App = () => {
     const [title, setTitle] = React.useState(false);
     const [author, setAuthor] = React.useState(false);
     const [genre, setGenre] = React.useState(false);
+    const [isLoading, setLoading] = React.useState(false);
     
     React.useEffect(() => {
+        setLoading(true);
        if (!title && !author && !genre) {
             getBooks(sort, order, searchTerm).then((books) => {
                 setBooks(books);
                 setListLength(books.length);
+                setLoading(false);
             });
        } else {
            if (searchTerm !== '') {
                advancedSearch(searchTerm, title, author, genre).then((books) => {
                    setBooks(books);
                    setListLength(books.length);
+                   setLoading(false);
                });
            }
        }
@@ -153,6 +158,9 @@ const App = () => {
                 <option value="DESC">Descending</option>
             </select>
             <p>Showing <strong>{listLength}</strong> books. <a href="#" onClick={showAll}>Show all</a>.</p>
+        </section>
+        <section className={isLoading ? 'loading' : 'hidden'}>
+            <Spinner />
         </section>
         <div className="books">
             {rows}

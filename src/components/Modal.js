@@ -27,7 +27,7 @@ const Modal = (props) => {
                         <span className="modal-close" onClick={props.closeHandler}><img src="./images/close.svg" width="18" /></span>
                         <article>
                             <section>
-                                <img src={book.cover_art !== '' ? './images/covers/' + book.cover_art : './images/book.svg'} />
+                                <img src={book.cover_art !== '' ? 'http://mytinylibrary.org.za/images/covers/' + book.cover_art : './images/book.svg'} />
                             </section>
                             <section>
                                 <h2>{book.title}</h2>

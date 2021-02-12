@@ -26,7 +26,7 @@ const Book = (props) => {
         <div className="book">
             <animated.div style={spring}>
                 
-                <img src={props.book.cover_art !== '' ? './images/covers/' + props.book.cover_art : './images/book.svg'} alt={props.book.title + ' by ' + props.book.author_firstname + ' ' + props.book.author_surname} />
+                <img src={props.book.cover_art !== '' ? 'http://mytinylibrary.org.za/images/covers/' + props.book.cover_art : './images/book.svg'} alt={props.book.title + ' by ' + props.book.author_firstname + ' ' + props.book.author_surname} />
                 <h2>{props.book.title}</h2>
                 <h3>{props.book.author_firstname} {props.book.author_surname}</h3>
                 <p className="pull">{props.book.category}</p>

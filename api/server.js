@@ -14,19 +14,6 @@ var corsOptions = {
 app.use(cors(corsOptions));
 port = process.env.PORT || 9000;
 
-
-
-const mysql = require('mysql');
-
-const mc = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'xlM569z003',
-    database: 'mytinylibrary'
-});
-// connect to database
-mc.connect();
-
 app.listen(port);
 
 console.log('API server started on: ' + port);
